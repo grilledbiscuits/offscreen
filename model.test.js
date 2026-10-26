@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {ranking,formatTime,validTime,readState} from './dist/model.js';
+test('lowest time ranks first and updating user time moves the user',()=>{assert.equal(ranking(20)[0].self,true);assert.equal(ranking(300).at(-1).self,true);assert.equal(ranking(102)[2].self,true);});
+test('time boundaries reject invalid entries',()=>{assert.ok(validTime(0,0));assert.ok(validTime(24,0));for(const v of [[24,1],[-1,10],[1,60],[1.5,10],[NaN,2]])assert.equal(validTime(...v),false);assert.equal(formatTime(102),'1h 42m');});
+test('storage recovers from corrupt and out-of-range data',()=>{assert.equal(readState('broken').minutes,102);assert.equal(readState('{"minutes":-1}').minutes,102);assert.deepEqual(readState('{"joined":["two-hour","bad"]}').joined,['two-hour']);assert.equal(readState('{"minutes":0}').minutes,0);});

@@ -1,0 +1,6 @@
+export const defaults = {minutes:102, goal:120, joined:[], kudos:false};
+export const friends = [ {name:'Alex Morgan', initials:'AM',minutes:76,color:'#e4ddcf',note:'The early bird'}, {name:'Sophie Chen',initials:'SC',minutes:94,color:'#e1e7d7',note:'Making time for books'}, {name:'Jamie Davis',initials:'JD',minutes:102,color:'#d9e5ce',note:'You',self:true}, {name:'Noah Williams',initials:'NW',minutes:136,color:'#e3e7ed',note:'Outside more often'}, {name:'Mia Patel',initials:'MP',minutes:158,color:'#eee0d8',note:'One day at a time'}, {name:'Oliver Brooks',initials:'OB',minutes:192,color:'#e2dfe9',note:'Work in progress'} ];
+export function formatTime(m){return `${Math.floor(m/60)}h ${String(m%60).padStart(2,'0')}m`;}
+export function ranking(minutes){return friends.map(f=>({...f,minutes:f.self?minutes:f.minutes})).sort((a,b)=>a.minutes-b.minutes);}
+export function validTime(h,m){return Number.isInteger(h)&&Number.isInteger(m)&&h>=0&&h<=24&&m>=0&&m<60&&h*60+m<=1440;}
+export function readState(raw){try{const s=JSON.parse(raw);return {minutes:Number.isInteger(s?.minutes)&&s.minutes>=0&&s.minutes<=1440?s.minutes:102,goal:Number.isInteger(s?.goal)&&s.goal>=15&&s.goal<=1440?s.goal:120,joined:Array.isArray(s?.joined)?s.joined.filter(x=>['two-hour','weekend'].includes(x)):[],kudos:s?.kudos===true};}catch{return {...defaults,joined:[]}}}

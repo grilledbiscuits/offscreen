@@ -7,6 +7,9 @@ A responsive screen-time competition prototype. No dependencies or build step.
 ## Check
 `npm test`
 
+## Planned work
+See [TODO.md](TODO.md) for the proposed screen-time screenshot import.
+
 ## Try
 Log today's screen time and watch your ranking change. Join a challenge, send kudos, and set your daily goal. Choices persist in localStorage.
 
